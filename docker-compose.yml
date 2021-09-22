@@ -8,3 +8,10 @@ services:
       - 3000:3000
     volumes:
       - .:/app/
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app/
+    command: ["npm", "run", "test"] # here we are overriding the running command defined in Dockerfile.dev
