@@ -1,0 +1,13 @@
+FROM node:alpine as build-builder
+WORKDIR /app/
+COPY package.json .
+RUN npm install
+COPY . .
+RUN npm run build
+
+
+#multi state container the above container will be remove once we copy the build from there
+
+FROM nginx
+COPY --from=build-builder /app/build /usr/share/nginx/html 
+# no need to run the nginx it will automatically start the server
